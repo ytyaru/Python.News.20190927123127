@@ -1,0 +1,8 @@
+feedparser==5.2.1
+pytz==2019.2
+tzlocal==2.0.0
+selenium==3.141.0
+beautifulsoup4==4.8.0
+lxml==4.4.1
+readability-lxml==0.7.1
+html2text==2019.8.11
