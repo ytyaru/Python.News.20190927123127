@@ -11,11 +11,11 @@ class NewsSummaryDb:
         self.conn.row_factory = sqlite3.Row
         self.__create_table()
         self.__create_table(schema_name=self.__schema_ram)
-        self.__latest_row = self.__get_latest_row(schema_name=self.__schema_ram)
+#        self.__latest_row = self.__get_latest_row(schema_name=self.__schema_ram)
         self.news = []
     def __del__(self): self.conn.close()
-    @property
-    def LatestRow(self): return self.__latest_row
+#    @property
+#    def LatestRow(self): return self.__latest_row
     # schema_name: main, temp, (attach-db-name)
     def __schema_name(self, schema_name=None): return (
         '' if schema_name is None or 0 == len(schema_name) else (schema_name 
@@ -65,12 +65,9 @@ select exists(
 """.format(schema_name=self.__schema_name(schema_name), 
             published=published, url=url, title=title)
     def is_exists(self, published, url, title):
-        if self.__latest_row is None: return False
-        if self.__latest_row['published'] < published: return True
         result = self.conn.cursor().execute(
             self.__is_exists_sql(published, url, title, self.__schema_ram), 
             ).fetchone()['is_exists']
-        print(result)
         return True if 1 == result else False
     def append_news(self, published, url, title, summary=''):
         self.news.append((published, url, title, summary))

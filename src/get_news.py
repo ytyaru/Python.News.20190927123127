@@ -51,7 +51,8 @@ for feed in feeds:
             ).strftime('%Y-%m-%dT%H:%M:%SZ')
         url = entry.link
         title = entry.title
-        if summaryDb.is_exists(published, url, title): break
+        if latest_published is not None and published < latest_published: break
+        if summaryDb.is_exists(published, url, title): continue
         summary = has_def(entry, 'summary', '')
         summaryDb.append_news(published,url,title,summary=summary)
     feedsDb.append(feed, dtCnv.convert_utc((
