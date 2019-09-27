@@ -34,8 +34,10 @@ class HtmlGetter:
         return str(self.__soup.html)
 
 class MoreLinkGetter:
-    def __init__(self): pass
+    def __init__(self): self.__re_more_link = re.compile(r'^.*続きを読む.*$')
     def get(self, soup, url):
-        link = soup.find('a', text=re.compile(r'^.*続きを読む.*$'))
+#        link = soup.find('a', text=re.compile(r'^.*続きを読む.*$'))
+        link = soup.find('a', string=self.__re_more_link) # bf4.4以降はtextでなくstring
+        if link is None: link = soup.find('a', text=self.__re_more_link)
         return url if link is None else link.get('href')
 
